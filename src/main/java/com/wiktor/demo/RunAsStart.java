@@ -1,33 +1,42 @@
 package com.wiktor.demo;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.util.List;
+import org.apache.log4j.Logger;
 
 @Component
 public class RunAsStart {
     private final EmployeeRepository employeeRepository;
+    private final EmployeeGenerator employeeGenerator;
+    private final Logger logger = Logger.getLogger(RunAsStart.class);
 
     @Autowired
-    public RunAsStart(EmployeeRepository employeeRepository) {
+    public RunAsStart(EmployeeRepository employeeRepository, EmployeeGenerator employeeGenerator) {
         this.employeeRepository = employeeRepository;
+        this.employeeGenerator = employeeGenerator;
     }
 
     @PostConstruct
     public void runAtStart() {
-        Employee employee = new Employee();
-        employee.setFirstName("Jan");
-        employee.setSecondName("Nowak");
-        employee.setSalary(new BigDecimal("1337.0"));
-        employee.setEmployeeDate(LocalDate.now());
-        employeeRepository.save(employee);
+        for (int i = 0; i < 100; i++) {
+            employeeRepository.save(
+                    employeeGenerator.generate());
+        }
 
-        List<Employee> jans = employeeRepository.findByFirstName("Jan");
-        Employee jan = jans.get(0);
-        System.out.println("Janek " + jan);
+        List<Employee> allUnsorted = employeeRepository.findAll();
+        printAll(allUnsorted);
+
+       List<Employee> sortedByFirstName = employeeRepository.findAll((new Sort(Sort.Direction.ASC, "firstName")));
+        logger.info("SORTED BY FIRST NAME");
+        printAll(sortedByFirstName);
+
+    }
+
+    private void printAll(List<Employee> allUnsorted) {
+        allUnsorted.forEach(logger::info);
     }
 }

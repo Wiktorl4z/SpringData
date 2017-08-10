@@ -26,6 +26,7 @@ repositories { // repozytorium dotyczy samego programu
 dependencies { // zaleznosci
 	compile('org.springframework.boot:spring-boot-starter-data-jpa')
 	runtime('mysql:mysql-connector-java')
+	compile('org.hibernate:hibernate-java8')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 	compileOnly 'org.projectlombok:lombok:1.16.18'
 }
