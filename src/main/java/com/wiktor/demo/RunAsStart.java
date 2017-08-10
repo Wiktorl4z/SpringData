@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
+
 import org.apache.log4j.Logger;
 
 @Component
@@ -30,10 +31,17 @@ public class RunAsStart {
         List<Employee> allUnsorted = employeeRepository.findAll();
         printAll(allUnsorted);
 
-       List<Employee> sortedByFirstName = employeeRepository.findAll((new Sort(Sort.Direction.ASC, "firstName")));
+        List<Employee> sortedByFirstName = employeeRepository.findAll(
+                new Sort(
+                        new Sort.Order(
+                                Sort.Direction.ASC, "firstName"
+                        ),
+                        new Sort.Order(
+                                Sort.Direction.ASC, "secondName"
+                        )
+                ));
         logger.info("SORTED BY FIRST NAME");
         printAll(sortedByFirstName);
-
     }
 
     private void printAll(List<Employee> allUnsorted) {
