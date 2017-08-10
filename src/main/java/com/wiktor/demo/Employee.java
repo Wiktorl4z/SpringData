@@ -6,9 +6,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
-@Entity
 @Data
+@Entity
 public class Employee {
     @Id
     @GeneratedValue
@@ -16,4 +17,7 @@ public class Employee {
     private String firstName;
     private String secondName;
     private BigDecimal salary;
+    private LocalDate employeeDate;
 }
+
+

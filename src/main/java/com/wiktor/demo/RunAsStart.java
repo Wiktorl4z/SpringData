@@ -5,6 +5,8 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.util.List;
 
 @Component
 public class RunAsStart {
@@ -21,10 +23,11 @@ public class RunAsStart {
         employee.setFirstName("Jan");
         employee.setSecondName("Nowak");
         employee.setSalary(new BigDecimal("1337.0"));
+        employee.setEmployeeDate(LocalDate.now());
         employeeRepository.save(employee);
 
-        Iterable<Employee> jans = employeeRepository.findByFirstName("Jan");
-        Employee jan = jans.iterator().next();
+        List<Employee> jans = employeeRepository.findByFirstName("Jan");
+        Employee jan = jans.get(0);
         System.out.println("Janek " + jan);
     }
 }
