@@ -33,9 +33,12 @@ public class RunAsStart {
 
 //        logger.info("ALL EMPLOYEES");
 //        printAll(employeeRepository.findByLastNameOrderByFirstNameDesc("Smith"));
-        
-        logger.info("ALL EMPLOYEES");
-        printAll(employeeRepository.findBySalaryBetween(new BigDecimal("1000"), new BigDecimal("2000")));
+
+//        logger.info("ALL EMPLOYEES");
+//        printAll(employeeRepository.findBySalaryBetween(new BigDecimal("1000"), new BigDecimal("2000")));
+
+        logger.info("FIRST JOHN:" + employeeRepository.findByFirstName("John"));
+        logger.info("FIRST Arthur:" + employeeRepository.findByFirstName("Arthur"));
     }
 
     private void generateManyEmployees() {
