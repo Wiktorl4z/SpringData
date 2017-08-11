@@ -7,6 +7,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -27,9 +28,14 @@ public class RunAsStart {
     public void runAtStart() {
         generateManyEmployees();
 
-        logger.info("ALL EMPLOYEES");
-       printAll(employeeRepository.findByFirstNameIgnoreCase("jOhN"));
+//        logger.info("ALL EMPLOYEES");
+//       printAll(employeeRepository.findByFirstNameIgnoreCase("jOhN"));
 
+//        logger.info("ALL EMPLOYEES");
+//        printAll(employeeRepository.findByLastNameOrderByFirstNameDesc("Smith"));
+        
+        logger.info("ALL EMPLOYEES");
+        printAll(employeeRepository.findBySalaryBetween(new BigDecimal("1000"), new BigDecimal("2000")));
     }
 
     private void generateManyEmployees() {
@@ -38,7 +44,6 @@ public class RunAsStart {
                     employeeGenerator.generate());
         }
     }
-
 
 
     private void printAll(List<Employee> allUnsorted) {

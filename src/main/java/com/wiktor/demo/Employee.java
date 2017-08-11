@@ -15,7 +15,7 @@ public class Employee {
     @GeneratedValue
     private Long id;
     private String firstName;
-    private String secondName;
+    private String lastName;
     private BigDecimal salary;
     private LocalDate employeeDate;
 }

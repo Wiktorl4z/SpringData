@@ -25,7 +25,7 @@ public class EmployeeGenerator {
     Employee generate() {
         Employee employee = new Employee();
         employee.setFirstName(getRandomFirstName());
-        employee.setSecondName(getRandomLastName());
+        employee.setLastName(getRandomLastName());
         employee.setSalary(getRandomSalary());
         employee.setEmployeeDate(getRandomEmploymentDate());
 
