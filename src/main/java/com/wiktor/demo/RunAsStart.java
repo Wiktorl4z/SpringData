@@ -7,10 +7,14 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import java.awt.print.Pageable;
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.apache.log4j.Logger;
+import org.springframework.transaction.annotation.Transactional;
 
 @Component
 public class RunAsStart {
@@ -40,7 +44,32 @@ public class RunAsStart {
 //        logger.info("FIRST JOHN:" + employeeRepository.findByFirstName("John"));
 //        logger.info("FIRST Arthur:" + employeeRepository.findByFirstName("Arthur"));
 
-        printAll(employeeRepository.findTop3ByFirstName("John"));
+//        printAll(employeeRepository.findTop3ByFirstName("John"));
+
+//        logger.info(
+//                String.format(
+//                        "Number of John Smith's: ",
+//                employeeRepository
+//                        .countByFirstNameAndLastNameIgnoreCase(
+//                                "John",
+//                                "Smith")));
+
+
+//        Page<Employee> johnPage = employeeRepository.findByFirstName("John", new PageRequest(1,3));
+//        printAll(johnPage.getContent());
+//        logger.info("Total number of pages: " + johnPage.getTotalPages());
+
+
+//        Stream<Employee> johnStream = employeeRepository.findTop10ByFirstName("John");
+//        List<String> johnsLastName = johnStream
+//                .map(Employee::getLastName)
+//                .collect(Collectors.toList());
+//        logger.info(johnsLastName);
+
+
+        employeeRepository.findFirstByFirstNameIgnoreCase("John").thenAccept(john -> {
+            logger.info("John: " + john);
+        });
     }
 
     private void generateManyEmployees() {
