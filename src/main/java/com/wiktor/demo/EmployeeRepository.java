@@ -12,5 +12,7 @@ List<Employee> findByLastNameOrderByFirstNameDesc(String lastName);
 List<Employee> findBySalaryBetween(BigDecimal salary1, BigDecimal salary2);
 List<Employee> findByFirstName(String firstName);
 
+List<Employee> findTop3ByFirstName(String firstName);
+
 }
 
