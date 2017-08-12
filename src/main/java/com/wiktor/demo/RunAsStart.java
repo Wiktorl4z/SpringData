@@ -5,19 +5,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import java.math.BigDecimal;
 import java.util.List;
 
 @Component
 public class RunAsStart {
     private final EmployeeRepository employeeRepository;
     private final EmployeeGenerator employeeGenerator;
+    private final EmployeeRepositoryFromBaseRepository employeeRepositoryFromBaseRepository;
+//    private final EmployeeBaseRepository employeeBaseRepository;
     private final Logger logger = Logger.getLogger(RunAsStart.class);
 
     @Autowired
-    public RunAsStart(EmployeeRepository employeeRepository, EmployeeGenerator employeeGenerator) {
+    public RunAsStart(EmployeeRepository employeeRepository, EmployeeGenerator employeeGenerator, EmployeeRepositoryFromBaseRepository employeeRepositoryFromBaseRepository) {
         this.employeeRepository = employeeRepository;
         this.employeeGenerator = employeeGenerator;
+        this.employeeRepositoryFromBaseRepository = employeeRepositoryFromBaseRepository;
+//        this.employeeBaseRepository = employeeBaseRepository;
     }
 
     @PostConstruct
@@ -36,10 +39,11 @@ public class RunAsStart {
 //        Employee onlyGuyWithHighSalary = employeeRepository.findOnlyOneGuyWithHighestSalary();
 //        logger.info(onlyGuyWithHighSalary);
 
-        List<Employee> nativelyWithSalaryBetween = employeeRepository.findNativelyWithSalaryBetween(new BigDecimal("1000"), new BigDecimal("2000"));
+//        List<Employee> nativelyWithSalaryBetween = employeeRepository.findNativelyWithSalaryBetween(new BigDecimal("1000"), new BigDecimal("2000"));
+//
+//        logger.info(nativelyWithSalaryBetween);
 
-        logger.info(nativelyWithSalaryBetween);
-
+        printAll(employeeRepositoryFromBaseRepository.findAll());
 
     }
 
@@ -49,7 +53,6 @@ public class RunAsStart {
                     employeeGenerator.generate());
         }
     }
-
 
     private void printAll(List<Employee> allUnsorted) {
         allUnsorted.forEach(logger::info);
