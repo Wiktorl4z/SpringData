@@ -5,45 +5,31 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import java.math.BigDecimal;
 import java.util.List;
 
 @Component
 public class RunAsStart {
     private final EmployeeRepository employeeRepository;
     private final EmployeeGenerator employeeGenerator;
-    private final EmployeeRepositoryFromBaseRepository employeeRepositoryFromBaseRepository;
-//    private final EmployeeBaseRepository employeeBaseRepository;
     private final Logger logger = Logger.getLogger(RunAsStart.class);
 
     @Autowired
-    public RunAsStart(EmployeeRepository employeeRepository, EmployeeGenerator employeeGenerator, EmployeeRepositoryFromBaseRepository employeeRepositoryFromBaseRepository) {
+    public RunAsStart(EmployeeRepository employeeRepository, EmployeeGenerator employeeGenerator) {
         this.employeeRepository = employeeRepository;
         this.employeeGenerator = employeeGenerator;
-        this.employeeRepositoryFromBaseRepository = employeeRepositoryFromBaseRepository;
-//        this.employeeBaseRepository = employeeBaseRepository;
     }
 
     @PostConstruct
     public void runAtStart() {
         generateManyEmployees();
 
-//        List<Employee> allWithSalariesBetweenSomeValues = employeeRepository.findAllWithSalariesBetweenSomeValues(
-//                new BigDecimal("1000"),
-//                new BigDecimal("2000")
-//        );
-//        printAll(allWithSalariesBetweenSomeValues);
+        printAll(employeeRepository.findAll());
 
-//        List<Employee> guyWithHighestSalary = employeeRepository.findGuyWithHighestSalary();
-//        printAll(guyWithHighestSalary);
+        int numberOfUpdates = employeeRepository.setSalaryForAll(new BigDecimal("5000"));
+        logger.info("UPDATE: " + numberOfUpdates + "ENTITIES ");
 
-//        Employee onlyGuyWithHighSalary = employeeRepository.findOnlyOneGuyWithHighestSalary();
-//        logger.info(onlyGuyWithHighSalary);
-
-//        List<Employee> nativelyWithSalaryBetween = employeeRepository.findNativelyWithSalaryBetween(new BigDecimal("1000"), new BigDecimal("2000"));
-//
-//        logger.info(nativelyWithSalaryBetween);
-
-        printAll(employeeRepositoryFromBaseRepository.findAll());
+        printAll(employeeRepository.findAll());
 
     }
 
