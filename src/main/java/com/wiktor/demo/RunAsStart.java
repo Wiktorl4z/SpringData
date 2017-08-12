@@ -1,20 +1,12 @@
 package com.wiktor.demo;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import java.awt.print.Pageable;
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
-import org.apache.log4j.Logger;
-import org.springframework.transaction.annotation.Transactional;
 
 @Component
 public class RunAsStart {
@@ -32,44 +24,23 @@ public class RunAsStart {
     public void runAtStart() {
         generateManyEmployees();
 
-//        logger.info("ALL EMPLOYEES");
-//       printAll(employeeRepository.findByFirstNameIgnoreCase("jOhN"));
+//        List<Employee> allWithSalariesBetweenSomeValues = employeeRepository.findAllWithSalariesBetweenSomeValues(
+//                new BigDecimal("1000"),
+//                new BigDecimal("2000")
+//        );
+//        printAll(allWithSalariesBetweenSomeValues);
 
-//        logger.info("ALL EMPLOYEES");
-//        printAll(employeeRepository.findByLastNameOrderByFirstNameDesc("Smith"));
+//        List<Employee> guyWithHighestSalary = employeeRepository.findGuyWithHighestSalary();
+//        printAll(guyWithHighestSalary);
 
-//        logger.info("ALL EMPLOYEES");
-//        printAll(employeeRepository.findBySalaryBetween(new BigDecimal("1000"), new BigDecimal("2000")));
-//
-//        logger.info("FIRST JOHN:" + employeeRepository.findByFirstName("John"));
-//        logger.info("FIRST Arthur:" + employeeRepository.findByFirstName("Arthur"));
+//        Employee onlyGuyWithHighSalary = employeeRepository.findOnlyOneGuyWithHighestSalary();
+//        logger.info(onlyGuyWithHighSalary);
 
-//        printAll(employeeRepository.findTop3ByFirstName("John"));
+        List<Employee> nativelyWithSalaryBetween = employeeRepository.findNativelyWithSalaryBetween(new BigDecimal("1000"), new BigDecimal("2000"));
 
-//        logger.info(
-//                String.format(
-//                        "Number of John Smith's: ",
-//                employeeRepository
-//                        .countByFirstNameAndLastNameIgnoreCase(
-//                                "John",
-//                                "Smith")));
+        logger.info(nativelyWithSalaryBetween);
 
 
-//        Page<Employee> johnPage = employeeRepository.findByFirstName("John", new PageRequest(1,3));
-//        printAll(johnPage.getContent());
-//        logger.info("Total number of pages: " + johnPage.getTotalPages());
-
-
-//        Stream<Employee> johnStream = employeeRepository.findTop10ByFirstName("John");
-//        List<String> johnsLastName = johnStream
-//                .map(Employee::getLastName)
-//                .collect(Collectors.toList());
-//        logger.info(johnsLastName);
-
-
-        employeeRepository.findFirstByFirstNameIgnoreCase("John").thenAccept(john -> {
-            logger.info("John: " + john);
-        });
     }
 
     private void generateManyEmployees() {
